@@ -107,15 +107,26 @@ body {
 }
 
 
-#loginButton{
-  text-align: right;
+
+.loginButton{
+  background-color: #5858FA;
   width: 70px;
   height: 30px;
+  display: flex;
+  justify-content: center;
+  margin-left: 30px;
+  border-radius: 6px;
+  box-shadow: 4px 4px 10px 1px black;
+}
 
+.loginButton:hover{
+  background-color: #20c46c;
+  transition: 0.3s;
 }
 
 .inputButton{
   margin-top: 12px;
+  color: black;
 }
 
 .buttonArea{
