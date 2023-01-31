@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+{% load static %}
+{% load recent_post %}
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMO-mini</title>
+
+  <!-- Favicons -->
+  <link href="{% static 'webapp/assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'webapp/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+
+  <link href="{% static 'webapp/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'webapp/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'webapp/assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'webapp/assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'webapp/assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'webapp/assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'webapp/assets/css/style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Tempo - v4.10.0
+  * Template URL: https://bootstrapmade.com/tempo-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+
+
+  <script>
+    function refresh() {
+      $("#infoSection").load(window.location.href + "#infoSection");
+    }
+  </script>
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo"><a href="/">OMOROBOT</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">Info</a></li>
+          <li><a class="nav-link scrollto" href="#team">Team</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <!-- <li><a class="btn btn-primary" href="#" role="button" id="loginButton" data-toggle="modal"
+              data-target="#loginModal">&nbsp Login</a></li> -->
+          {% if user.is_authenticated %}
+          <li class="dropdown"><a href="#"><span>
+                {% if user.socialaccount_set.all.0.get_avatar_url %}
+                <img class="rounded-circle" width="25px" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="">
+                {% else %}
+                <img class="rounded-circle" width="25px"
+                  src="https://doitdjango.com/avatar/id/1376/03af528d20df18bd/svg/{{ user.username }}">
+                {% endif %}
+                &nbsp;
+                {{ user.username }}
+              </span>
+              <i class="bi bi-chevron-down"></i>
+            </a>
+            <ul>
+              <li class="dropdown">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Log Out</a>
+              </li>
+            </ul>
+
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Log In</a>
+          </li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div class="hero-container">
+      <h3>Welcome to <strong>OMOROBOT</strong></h3>
+      <h1>OMO R1MINI</h1>
+      <h2>초급자부터 전문가까지 한 대의 로봇으로 지속하는 자율주행 연구.</h2>
+      <a href="#about" class="btn-get-started scrollto">Get Started</a>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+
+    <!-- ======= About Section ======= -->
+
+
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Info</h2>
+          <h3>OMO R1MINI <span>실시간 정보</span></h3>
+          <p>실시간 정보를 입력할 수 있습니다.</p>
+        </div>
+
+        <div class="row content">
+          <div class="section-title">
+
+            <!-- Project Card Example -->
+            {% if info_list %}
+            {% recent_posts 1 as posts %}
+            {% for p in posts %}
+
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="infoarea">
+                  <h6 class="m-0 font-weight-bold text-primary" id="infoTITLE">INFO</h6>
+                  {% if user.is_authenticated %}
+                  <a href="" title="Button push blue/green" class="button btnPush btnBlueGreen" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">INPUT</a>
+                    {% else %}
+                    로그인이 필요합니다.
+                  {% endif %}
+
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="infoTop">
+                  <div class="bat">
+                    <div class="batText">
+                      <h4 class="small font-weight-bold">BATTERY&nbsp;&nbsp;</h4><span class="float-right bat-fig"
+                        id="bat-fig">
+                        <h5>{{ p.battery }}</h5>
+                      </span>
+                      <h5>%</h5>
+                    </div>
+                    <div class="progress mb-4">
+                      <div class="progress bat-prog" id="bat_prog" role="progressbar"
+                        aria-label="Animated striped example" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bat_prog_col"
+                          id="bat_prog_col" style="width: 100%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="infoBottom">
+                    <div class="colInfo mb-4">
+
+                      <h4 class="small font-weight-bold color_box_fig">LED COLOR<span class="float-right">
+                          <div>
+                            <input class="color_box_input" type="color" value="{{ p.color }}" disabled />
+                          </div>
+                        </span></h4>
+                    </div>
+
+                    <div class="runInfo mb-4">
+                      <div>
+                        <h4 class="small font-weight-bold runtime_fig">RUN TIME<span class="float-right bat-fig">
+
+                            <div>
+                              <h4 class="runtime_info">
+                                {{ p.runtime }}
+                              </h4>
+                            </div>
+
+                          </span></h4>
+                      </div>
+                    </div>
+                    <div class="firmV mb-4">
+                      <h4 class="small font-weight-bold firmV_fig">VERSION<span class="float-right bat-fig">
+                          <div>
+                            <h4 class="firmV_info">
+                              {{ p.firmV }}
+                            </h4>
+                          </div>
+                        </span></h4>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% endfor %}
+            {% else %}
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="infoarea">
+                  <h6 class="m-0 font-weight-bold text-primary infoTitle">INFO</h6>
+                  {% if user.is_authenticated %}
+                  <a href="" title="Button push blue/green" class="button btnPush btnBlueGreen" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">INPUT</a>
+                  {% else %}
+                  로그인이 필요합니다.
+
+                  {% endif %}
+
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="infoTop">
+                  <div class="bat">
+                    <h4 class="small font-weight-bold">BATTERY<span class="float-right bat-fig">
+                        0
+                      </span></h4>
+                    <div class="progress mb-4">
+                      <div class="progress bat-prog" role="progressbar" aria-label="Animated striped example"
+                        aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bat_prog_col"
+                          style="width: 100%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="infoBottom">
+                    <div class="colInfo mb-4">
+                      <div>
+                        <h4 class="small font-weight-bold color_box_fig">COLOR<span class="float-right">
+
+                            <div>
+                              <input class="color_box_input" type="color" value="#000000" disabled />
+                            </div>
+                          </span></h4>
+                      </div>
+                    </div>
+                    <div class="runInfo mb-4">
+                      <div>
+                        <h4 class="small font-weight-bold runtime_fig">RUN TIME<span class="float-right bat-fig">
+
+                            <div>
+                              <h3 class="runtime_info">
+                                0
+                              </h3>
+                            </div>
+
+                          </span></h4>
+                      </div>
+                    </div>
+                    <div class="firmV mb-4">
+                      <h4 class="small font-weight-bold firmV_fig">firmV<span class="float-right bat-fig">
+                          <div>
+                            <h3>
+                              NULL
+                            </h3>
+                          </div>
+                        </span></h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+
+      </div>
+
+      {% if user.is_authenticated %}
+      <!-- accordion -->
+      <div class="container">
+        <div class="accordion" id="accordionFlushExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <div class="dataReviewButton">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                
+              
+                  <h6 class="dataReviewText">DATA REVIEW</h6>
+               
+               
+              </button>
+            </div>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+              data-bs-parent="#accordionFlushExample">
+
+              
+              <div class="container">
+                <div class="section-title">
+                  <p>지난 기록들을 확인할 수 있습니다.</p>
+                </div>
+                <a title="Button push blue/green" class="button btnPush btnBlueGreen" id="btn-all-close">ALL Close</a>
+                <br>
+                <table class="table table-bordered table-striped table-hover">
+
+                  <thead class="thead-light text-center">
+
+                    <th id="thText">아래 날짜를 클릭해주세요.</th>
+
+                  </thead>
+
+
+                  <tbody class="text-center">
+                    {% for s in info_list %}
+                    <tr>
+                      <td>
+                        <div class="panel-faq-container">
+                          <p class="panel-faq-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ s.created_at|date:'Y년 m월 d일 H:i:s' }}</p>
+                          </h5>
+                          <div class="panel-faq-answer">
+                            <div>배터리 : {{ s.battery }}%</div>
+                            <div>구동 시간 : {{ s.runtime }}(ms)</div>
+                            <div>
+                              LED : <input class="color_box_inputs" type="color" value="{{ s.color }}" disabled />
+                            </div>
+                            </p>
+
+                          </div>
+                        </div>
+                      </td>
+
+                    </tr>
+                    {% endfor %}
+
+                  </tbody>
+
+                </table>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+  <!-- End accordion section -->
+  {% endif %}
+
+
+
+
+    </section><!-- End About Section -->
+
+
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+      <div class="container">
+
+        <div class="text-center">
+          <h3>공식 홈페이지</h3>
+          <p>omorobot에 대한 자세한 정보를 원하시면 클릭해주세요.</p>
+          <a class="cta-btn" href="https://omorobot.com/" target="_blank">Click me</a>
+        </div>
+
+      </div>
+    </section><!-- End Cta Section -->
+
+
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Team</h2>
+          <h3>Team <span>박수쳐조</span></h3>
+          <p>저희 팀원들을 소개합니다.</p>
+        </div>
+
+        <div class="row" id="teamOne">
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member">
+              <div class="member-img">
+                <img src="{% static 'webapp/assets/img/team/sim1.png' %}" class="img-fluid" alt="">
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>고세환</h4>
+                <span>웹페이지, 웹서버</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member">
+              <div class="member-img">
+                <img src="{% static 'webapp/assets/img/team/sim2.png' %}" class="img-fluid" alt="">
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>김연우</h4>
+                <span>웹페이지, 모니터링</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member">
+              <div class="member-img">
+                <img src="{% static 'webapp/assets/img/team/sim3.png' %}" class="img-fluid" alt="">
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>문태규</h4>
+                <span>웹페이지, 웹서버</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" id="teamTwo">
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member">
+              <div class="member-img">
+                <img src="{% static 'webapp/assets/img/team/sim4.png' %}" class="img-fluid" alt="">
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>박한성</h4>
+                <span>웹페이지, 배포</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member">
+              <div class="member-img">
+                <img src="{% static 'webapp/assets/img/team/sim5.png' %}" class="img-fluid" alt="">
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>조영민</h4>
+                <span>웹페이지, 배포</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Team Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Contact</h2>
+          <h3>Contact <span>Us</span></h3>
+          <p>문의가 있으면 방문 또는 연락 부탁드립니다.</p>
+        </div>
+
+        <div>
+          <iframe style="border:0; width: 100%; height: 270px;"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3213.508152389766!2d127.3800007153575!3d36.34846858004409!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35654be1d22851ad%3A0xf50f267c3c4519dd!2z66-4656Y7Jy17ZWp6rWQ7Jyh7JuQ!5e0!3m2!1sko!2skr!4v1674145724710!5m2!1sko!2skr"
+            frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="row mt-5">
+
+          <div class="col-lg-4">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>대전 서구 계룡로491번길 86 미래융합교육원</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p>example@email.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Call:</h4>
+                <p>042 ) 000 - 0000</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0">
+
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Send (개발중)</button></div>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+
+
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>박수쳐조</span></strong>. All Rights Reserved
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+      </div>
+    </div>
+
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'webapp/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'webapp/assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'webapp/assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'webapp/assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'webapp/assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'webapp/assets/js/main.js' %}"></script>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">정보 입력</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'webapp:createform' %}">
+            <div class="modalForm">
+              <div>
+                <div>
+                  배터리<input type="text" name="battery" id="batteryInput">
+                </div>
+                <br>
+                <div>
+                  경과 시간<input type="text" name="runtime" id="runtimeInput">
+                </div>
+                <br>
+                <div>
+                  색상<input type="color" name="color" id="colorInput">
+                </div>
+                <br>
+                <div>
+                  펌웨어
+                  <select name="firmV" id="firmVer">
+                    <option>r1m_v2.32</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="buttonArea">
+                <div>
+                  <button type="submit" class="btn btn-primary" id="inputInfo" href="#">입력</button>
+                </div>
+                <div class="inputButton">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Login modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Log In</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body logmodalbody">
+          <div>
+            {% include 'webapp/login_temp.html' %}
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Logout modal -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="logoutModalLabel">Log Out</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="logoutmodalbody">
+          <div class="logout_temp"></div>
+          <div id="logout_tdiv">
+            <h3 id="logout_text">로그아웃 되었습니다.</h3>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <form action="{% url 'webapp:logout' %}" method="post" class="col-md-4 logout_button">
+            {% csrf_token %}
+            <input type="submit" value="확인">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script>
+    const bat_fig = document.querySelector('.bat-fig').innerText
+    const bat_prog_bar = document.querySelector('.bat-prog')
+    const bat_prog = document.querySelector('.bat_prog_col')
+
+    bat_prog_bar.style.width = `${bat_fig}%`
+
+
+
+
+    const color_box = document.querySelector('.color_box_input')
+    if (bat_fig < 21) {
+      bat_prog.style.backgroundColor = "#DF0101";
+    } else if (bat_fig < 41) {
+      bat_prog.style.backgroundColor = "#FF4000";
+    } else if (bat_fig < 61) {
+      bat_prog.style.backgroundColor = "#DF7401";
+    } else if (bat_fig < 81) {
+      bat_prog.style.backgroundColor = "#D7DF01";
+    } else if (bat_fig <= 100) {
+      bat_prog.style.backgroundColor = "#04B404";
+    }
+
+    let p_run_time = document.querySelector('.runtime_info')
+    let second = parseInt(parseInt(p_run_time.innerText) / 1000);
+
+    let minute = parseInt(second / 60);
+    second = second % 60;
+
+    let hour = parseInt(minute / 60);
+    minute = minute % 60;
+
+    let result = '';
+    if (hour > 0) {
+      result += hour + '시간 ';
+    }
+    if (minute > 0) {
+      result += minute + '분 ';
+    }
+    if (second > 0) {
+      result += second + '초';
+    }
+    if (second == 0) {
+      result = 'NULL';
+    }
+    p_run_time.innerText = result;
+
+    document.querySelector('.robot_input').addEventListener('submit', (e) => {
+      const bat_fig = e.target.battery.value
+      bat_prog_bar.style.width = `${bat_fig}%`
+
+      if (bat_fig < 21) {
+        bat_prog.style.backgroundColor = "#ff0000";
+        color_box.value = "#ff0000";
+      } else if (bat_fig < 41) {
+        bat_prog.style.backgroundColor = "#ff8000";
+        color_box.value = "#ff8000";
+      } else if (bat_fig < 61) {
+        bat_prog.style.backgroundColor = "#ffff00";
+        color_box.value = "#ffff00";
+      } else if (bat_fig < 81) {
+        bat_prog.style.backgroundColor = "#80ff00";
+        color_box.value = "#80ff00";
+      } else if (bat_fig <= 100) {
+        bat_prog.style.backgroundColor = "#00ff00";
+        color_box.value = "#00ff00";
+      }
+    })
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+    crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>
